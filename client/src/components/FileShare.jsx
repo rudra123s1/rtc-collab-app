@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Upload, Download, FileText, Lock, Loader, AlertCircle } from 'lucide-react';
 import { encryptFile, decryptFile } from '../utils/crypto';
+import { getBackendUrl } from '../config';
+
 
 export default function FileShare({ socket, roomId, roomKey, username }) {
   const [files, setFiles] = useState([]);
@@ -54,7 +56,7 @@ export default function FileShare({ socket, roomId, roomKey, username }) {
 
       // 4. Upload Encrypted Binary to backend
       const token = localStorage.getItem('token');
-      const response = await fetch('/api/files/upload', {
+      const response = await fetch(getBackendUrl() + '/api/files/upload', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -103,7 +105,7 @@ export default function FileShare({ socket, roomId, roomKey, username }) {
     try {
       const token = localStorage.getItem('token');
       // 1. Download encrypted arrayBuffer
-      const response = await fetch(`/api/files/download/${fileMeta.fileId}`, {
+      const response = await fetch(getBackendUrl() + `/api/files/download/${fileMeta.fileId}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

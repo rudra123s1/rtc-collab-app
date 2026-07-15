@@ -4,6 +4,8 @@ import Auth from './components/Auth';
 import Dashboard from './components/Dashboard';
 import Room from './components/Room';
 
+import { getBackendUrl } from './config';
+
 export default function App() {
   const [user, setUser] = useState(null);
   const [roomDetails, setRoomDetails] = useState(null); // { roomId, roomPassword }
@@ -30,9 +32,7 @@ export default function App() {
 
   const handleJoinRoom = (roomId, roomPassword) => {
     // Establish Socket.io connection on room join
-    const socketUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-      ? 'http://localhost:5000'
-      : window.location.origin;
+    const socketUrl = getBackendUrl();
 
     const newSocket = io(socketUrl);
     setSocket(newSocket);

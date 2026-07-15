@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Shield, Key, User, ArrowRight, Activity } from 'lucide-react';
+import { getBackendUrl } from '../config';
 
 export default function Auth({ onAuthSuccess }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -32,7 +33,7 @@ export default function Auth({ onAuthSuccess }) {
 
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
-      const response = await fetch(endpoint, {
+      const response = await fetch(getBackendUrl() + endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
